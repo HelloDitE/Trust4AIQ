@@ -1,0 +1,11 @@
+{
+  "CO2": { "limit": 800, "unit": "ppm" },
+  "PM2.5": { "limit": 15, "unit": "µg/m3" },
+  "NO2": { "limit": 25, "unit": "µg/m3" },
+  "COV": { "limit": 500, "unit": "µg/m3" },
+  "CO": { "limit": 10, "unit": "mg/m3" },
+  "Ozone": { "limit": 25, "unit": "ppb" },
+  "Radon": { "limit": 100, "unit": "Bq/m3" },
+  "Formaldehyde": { "limit": 27, "unit": "ppb" },
+  "Humidité": { "limit": 60, "unit": "%" }
+}

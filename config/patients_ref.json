@@ -1,0 +1,28 @@
+{
+  "age": {
+    "child": { "condition": "< 10", "coeff": 0.2 },
+    "adult": { "condition": "10-65", "coeff": 0.0 },
+    "senior": { "condition": "> 65", "coeff": 0.3 }
+  },
+  "respiratory": {
+    "none": 0.0,
+    "mild": 0.3,
+    "severe": 0.6
+  },
+  "bmi": {
+    "underweight": { "range": "< 18.5", "coeff": 0.2 },
+    "normal": { "range": "18.5-25", "coeff": 0.0 },
+    "overweight": { "range": "25-30", "coeff": 0.1 },
+    "obese_1": { "range": "30-40", "coeff": 0.2 },
+    "obese_2": { "range": "> 40", "coeff": 0.3 }
+  },
+  "cardio": {
+    "none": 0.0,
+    "hypertension": 0.3,
+    "history_stroke_heart_failure": 0.5
+  },
+  "pregnancy": { "yes": 0.4, "no": 0.0 },
+  "immuno": { "yes": 0.3, "no": 0.0 },
+  "post_op": { "yes": 0.4, "no": 0.0 },
+  "smoking": { "yes": 0.2, "no": 0.0 }
+}
