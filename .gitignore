@@ -1,0 +1,38 @@
+# --- PYTHON (Backend) ---
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/.venv/
+**/venv/
+**/ENV/
+**/build/
+**/dist/
+
+# --- NODE / REACT (Frontend) ---
+**/node_modules/
+**/dist/
+**/dist-ssr/
+**/.cache/
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+
+# --- FICHIERS GÉNÉRÉS (Data) ---
+# Ignore les fichiers Excel générés dans ton dossier backend/data
+**/backend/data/*.xlsx
+**/backend/data/*.csv
+# Si tu veux garder les fichiers excel de démo, commente la ligne au-dessus avec un #
+
+# --- CONFIGURATION & SÉCURITÉ ---
+# TRÈS IMPORTANT : Ne jamais commit tes clés secrètes
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+
+# --- IDE & SYSTÈME ---
+**/.vscode/
+**/.idea/
+**/.DS_Store
+Thumbs.db
