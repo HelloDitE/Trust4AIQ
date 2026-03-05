@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { DashboardData } from "./types/dashboard";
 import { Header } from "./components/Header";
 import { VulnerabilityScore } from "./components/VulnerabilityScore";
+import { PatientsTable } from './components/PatientsTable';
 import { PollutantCard } from "./components/PollutantCard";
 import { RoomStatus } from "./components/RoomStatus";
 
@@ -23,8 +24,8 @@ export default function App() {
     <div className="min-h-screen bg-gray-50 p-10 space-y-8">
       
       <Header
-        patient={data.selected_patient_id}
-        status={data.risk_category}
+        nb_patient={data.patients_count}
+        status={data.most_critical_patient.risk_category}
         lastUpdate={data.last_update}
       />
 
@@ -33,18 +34,24 @@ export default function App() {
         <div className="lg:col-span-2">
           <VulnerabilityScore
             score={{
-              value: data.risk_score,
-              level: data.risk_category,
-              actions: data.actions
+              value: data.most_critical_patient.risk_score,
+              level: data.most_critical_patient.risk_category,
+              actions: data.most_critical_patient.actions
             }}
           />
         </div>
 
-        <RoomStatus status={data.risk_category} />
+        <RoomStatus status={data.most_critical_patient.risk_category} />
 
       </div>
 
-      {/* GRID POLLUANTS CORRIGÉ */}
+
+      <PatientsTable
+        patients={data.patients}
+        criticalPatient={data.most_critical_patient.id}
+      />
+    
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Object.entries(data.pollutants).map(([name, pollutant]) => (
           <PollutantCard

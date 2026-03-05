@@ -9,7 +9,18 @@ export interface PollutantData {
   status: PollutantStatus;
 }
 
+export interface Patient {
+  id: string;
+  vuln_score: number;
+  risk_score: number;
+  risk_category: RiskLevel;
+  actions: string[];
+}
+
+
 export interface DashboardData {
+  patients: Patient[];
+  most_critical_patient: Patient;
   pollutants: Record<string, PollutantData>;
   selected_patient_id: string;
   risk_score: number;

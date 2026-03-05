@@ -31,9 +31,10 @@ all_patients = patient_service.get_all_patients()
 if not all_patients:
     raise ValueError("❌ Aucun patient trouvé.")
 
-selected_patient = random.choice(all_patients)
-print(f"🎲 Nouveau patient sélectionné au démarrage : {selected_patient.id}")
+patients_count = random.randint(1, 10)
+selected_patients = random.sample(all_patients, patients_count)
 
+print("🎲 Patients sélectionnés au démarrage :", [p.id for p in selected_patients])
 
 # -----------------------------
 # Fonction statut polluant
@@ -57,13 +58,13 @@ def evaluate_pollutant(value, limit):
 @app.get("/dashboard")
 def get_dashboard():
 
-    # 1️⃣ Récupération capteurs
+    # 1️⃣ Capteurs
     indoor, outdoor = SensorService.get_latest_measurements()
 
     if not indoor:
         return {"error": "Capteurs indisponibles"}
 
-    # 2️⃣ Construction polluants enrichis
+    # 2️⃣ Polluants enrichis
     pollutants_data = {}
 
     for pollutant, value in indoor.items():
@@ -79,34 +80,50 @@ def get_dashboard():
                 "status": evaluate_pollutant(value, limit)
             }
 
-    # 3️⃣ Calcul index pollution
+    # 3️⃣ Index pollution (commun à tous)
     pollutant_index = RiskEngine.calculate_pollutant_index(indoor)
+    
+    # 4️⃣ Calcul risque pour CHAQUE patient
+    patients_results = []
 
-    # 4️⃣ Calcul risque patient
-    risk_score = RiskEngine.calculate_patient_risk(
-        selected_patient.vuln_score,
-        pollutant_index
+    for patient in selected_patients:
+
+        risk_score = RiskEngine.calculate_patient_risk(
+            patient.vuln_score,
+            pollutant_index
+        )
+
+        risk_category = RiskEngine.get_risk_category(risk_score)
+
+        actions = ActionEngine.determine_actions(
+            indoor,
+            outdoor,
+            risk_score
+        )
+
+        patients_results.append({
+            "id": patient.id,
+            "vuln_score": patient.vuln_score,
+            "risk_score": round(risk_score, 2),
+            "risk_category": risk_category,
+            "actions": actions
+        })
+
+    # 5️⃣ Patient le plus vulnérable
+    most_critical_patient = max(
+        patients_results,
+        key=lambda x: x["risk_score"]
     )
 
-    risk_category = RiskEngine.get_risk_category(risk_score)
-
-    # 5️⃣ Actions
-    actions = ActionEngine.determine_actions(
-        indoor,
-        outdoor,
-        risk_score
-    )
-
-    # 6️⃣ Date/heure réelle
+    # 6️⃣ Date/heure
     now = datetime.now().strftime("%d/%m %Hh%M")
 
     # 7️⃣ Retour API
     return {
         "pollutants": pollutants_data,
         "outdoor": outdoor,
-        "selected_patient_id": selected_patient.id,
-        "risk_score": round(risk_score, 2),
-        "risk_category": risk_category,
-        "actions": actions,
+        "patients_count": patients_count,
+        "patients": patients_results,
+        "most_critical_patient": most_critical_patient,
         "last_update": now
     }

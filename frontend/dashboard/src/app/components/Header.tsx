@@ -2,12 +2,12 @@ import { Clock, User } from 'lucide-react';
 import type { RiskLevel } from "../types/dashboard";
 
 interface HeaderProps {
-  patient: string;
+  nb_patient: number;
   status: RiskLevel;
   lastUpdate: string;
 }
 
-export function Header({ patient, status, lastUpdate }: HeaderProps) {
+export function Header({ nb_patient, status, lastUpdate }: HeaderProps) {
 
   const getStatusColor = () => {
     switch (status) {
@@ -42,7 +42,7 @@ export function Header({ patient, status, lastUpdate }: HeaderProps) {
           <h1 className="text-3xl font-semibold text-gray-900 mb-2">Chambre 203 – Réanimation</h1>
           <div className="flex items-center gap-2 text-gray-600 mb-1">
             <User className="w-4 h-4" />
-            <span className="font-medium">Patient ID : {patient}</span>
+            <span className="font-medium">{nb_patient} patient(s) détecté(s)</span>
           </div>
         </div>
       
