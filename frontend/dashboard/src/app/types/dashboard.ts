@@ -19,6 +19,7 @@ export interface Patient {
 
 
 export interface DashboardData {
+  patients_count: number;
   patients: Patient[];
   most_critical_patient: Patient;
   pollutants: Record<string, PollutantData>;

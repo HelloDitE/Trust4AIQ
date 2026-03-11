@@ -1,13 +1,16 @@
-import { Clock, User } from 'lucide-react';
+import { Clock, User, ArrowLeft } from 'lucide-react';
 import type { RiskLevel } from "../types/dashboard";
+import { Link } from 'react-router';
+
 
 interface HeaderProps {
+  room_id: number;
   nb_patient: number;
   status: RiskLevel;
   lastUpdate: string;
 }
 
-export function Header({ nb_patient, status, lastUpdate }: HeaderProps) {
+export function Header({ nb_patient, status, lastUpdate, room_id }: HeaderProps) {
 
   const getStatusColor = () => {
     switch (status) {
@@ -37,9 +40,17 @@ export function Header({ nb_patient, status, lastUpdate }: HeaderProps) {
 
   return (
     <header className="bg-white rounded-xl shadow-sm p-6">
+      <Link 
+        to="/"
+        className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        <span className="text-sm font-medium">Retour à la supervision</span>
+      </Link>
+
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <h1 className="text-3xl font-semibold text-gray-900 mb-2">Chambre 203 – Réanimation</h1>
+          <h1 className="text-3xl font-semibold text-gray-900 mb-2">Chambre {room_id}</h1>
           <div className="flex items-center gap-2 text-gray-600 mb-1">
             <User className="w-4 h-4" />
             <span className="font-medium">{nb_patient} patient(s) détecté(s)</span>
