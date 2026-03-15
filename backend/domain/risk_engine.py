@@ -33,9 +33,9 @@ class RiskEngine:
         """Retourne la couleur/catégorie de l'alerte"""
         if risk_score < 1.0:
             return "OPTIMAL"
-        elif 1.0 <= risk_score < 1.5:
+        elif 1.0 < risk_score <= 1.5:
             return "MODÉRÉ"
-        elif 1.5 <= risk_score < 2.0:
+        elif 1.5 < risk_score <= 2.5:
             return "ÉLEVÉ"
         else:
             return "CRITIQUE"

@@ -6,11 +6,9 @@ export const router = createBrowserRouter([
   {
     path: "/",
     Component: ServiceOverview,
-    // element: <ServiceOverview />,
   },
   {
     path: "/rooms/:room_id",
     Component: RoomDetail,
-    // element: <RoomDetail />,
   },
 ]);
